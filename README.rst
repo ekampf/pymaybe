@@ -2,10 +2,10 @@
 PyMaybe
 ===============================
 
-.. image:: https://img.shields.io/travis/ekampf/pymaybe.svg
+.. image:: https://travis-ci.org/ekampf/pymaybe.svg?branch=master
         :target: https://travis-ci.org/ekampf/pymaybe
-
-.. image:: https://img.shields.io/pypi/v/pymaybe.svg
+        
+.. image:: https://pypi.python.org/pypi/pymaybe.svg
         :target: https://pypi.python.org/pypi/pymaybe
 
 
