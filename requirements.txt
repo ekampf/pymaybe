@@ -1,0 +1,5 @@
+wheel==0.23.0
+tox
+coverage
+flake8
+Sphinx
