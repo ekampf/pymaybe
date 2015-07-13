@@ -13,8 +13,3 @@ A Python implementation of the Maybe pattern.
 
 * Free software: BSD license
 * Documentation: https://pymaybe.readthedocs.org.
-
-Features
---------
-
-* TODO
