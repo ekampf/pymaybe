@@ -2,9 +2,6 @@
 Credits
 =======
 
-Development Lead
-----------------
-
 * Eran Kampf <eran@ekampf.com>
 
 Contributors
