@@ -86,7 +86,38 @@ All other method calls on *Something* are forwarded to its real *value*:
     
     >>> maybe(None).invalid().method().or_else('unknwon')
     'unknwon'
+    
+Examples & Use Cases
+--------------------
 
+Parsing deep JSON objects where some items might be missing.
+Without maybe:
+
+    stores = json.get('stores')
+    if stores:
+        products = stores[0].get('products')
+        if products:
+            product_name = products[0].get('details', {}).get('name') or 'unknown'
+
+With maybe:
+    
+    product_name = maybe(stores)[0]['products'][0]['details']['name'].or_else('unknown')
+
+
+Getting the current logged in user's name.
+Without maybe:
+    
+    def get_user_name():
+        current_user = request.user
+        if current_user:
+            return current_user.name
+        
+        return ''
+        
+With maybe:
+
+    def get_user_name():
+        return maybe(request.user).name.or_else('')
 
 Further Reading
 ---------------
