@@ -137,11 +137,11 @@ With maybe:
 Further Reading
 ---------------
 
-* [Option (Scala)](http://www.scala-lang.org/api/current/scala/Option.html)
-* [Maybe (Java)](https://github.com/npryce/maybe-java)
-* [Maybe pattern (Python recipe)](http://code.activestate.com/recipes/577248-maybe-pattern/)
-* [Data.Maybe (Haskell)](http://www.haskell.org/ghc/docs/latest/html/libraries/base/Data-Maybe.html)
-* [Maybe (Ruby)](https://github.com/bhb/maybe)
+* `Option (Scala) <http://www.scala-lang.org/api/current/scala/Option.html>`_
+* `Maybe (Java) <https://github.com/npryce/maybe-java>`_
+* `Maybe pattern (Python recipe) <http://code.activestate.com/recipes/577248-maybe-pattern/>`_
+* `Data.Maybe (Haskell) <http://www.haskell.org/ghc/docs/latest/html/libraries/base/Data-Maybe.html>`_
+* `Maybe (Ruby) <https://github.com/bhb/maybe>`_
 
 Copyright and License
 ---------------------
