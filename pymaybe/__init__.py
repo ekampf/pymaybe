@@ -29,11 +29,45 @@ class Nothing(Maybe):
     def __call__(self, *args, **kwargs):
         return Nothing()
 
+    #region Comparison
+
     def __cmp__(self, other):
         if other.__class__ == Nothing:
             return 0
 
         return 1
+
+    def __eq__(self, other):
+        if other.__class__ == Nothing:
+            return True
+
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return True
+
+        return True if other else False
+
+    def __gt__(self, other):
+        return False
+
+    def __le__(self, other):
+        return True
+
+    def __ge__(self, other):
+        if other.__class__ == Nothing:
+            return True
+
+        return False
+
+    #endregion
 
     def __getattr__(self, name):
         return Nothing()
@@ -76,6 +110,7 @@ class Something(Maybe):
     def __call__(self, *args, **kwargs):
         return maybe(self.__value(*args, **kwargs))
 
+    #region Comparison
     def __cmp__(self, other):
         if other.__class__ == Nothing:
             return 1
@@ -84,6 +119,56 @@ class Something(Maybe):
             return cmp(self.get(), other.get())
         else:
             return cmp(self.get(), other)
+
+    def __eq__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return self.get() == other.get()
+
+        return self.get() == other
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return self.get() < other.get()
+
+        return self.get() < other
+
+
+    def __gt__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return self.get() > other.get()
+
+        return self.get() > other
+
+    def __le__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return self.get() <= other.get()
+
+        return self.get() <= other
+
+    def __ge__(self, other):
+        if other.__class__ == Nothing:
+            return False
+
+        if other.__class__ == Something:
+            return self.get() >= other.get()
+
+        return self.get() >= other
+    #endregion
 
     def is_some(self):
         return True
