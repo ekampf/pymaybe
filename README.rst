@@ -30,6 +30,8 @@ The implementation includes two classes: *Maybe* and *Something*.
 *Something* represents a value while *Nothing* represents a None value.
 There's also a method *maybe* which wraps a regular value and and returns *Something* or *Nothing* instance.
 
+::
+
     >>> maybe("I'm a value")
     "I'm a value"
     
@@ -38,6 +40,7 @@ There's also a method *maybe* which wraps a regular value and and returns *Somet
     
 Both *Something* and *Nothing* implement 4 methods allowing you to test their real value: *is_some*, *is_none*, *get* and *or_else*
 
+::
 
     >>> maybe("I'm a value").is_some()
     True
@@ -70,6 +73,8 @@ Both *Something* and *Nothing* implement 4 methods allowing you to test their re
 
 In addition, *Something* and *Nothing* implement the Python magic methods allowing you to treat them as dictionaries:
 
+::
+
     >>> nested_dict['store']['name']
     'MyStore'
 
@@ -80,6 +85,8 @@ In addition, *Something* and *Nothing* implement the Python magic methods allowi
     'No Address Specified'
 
 All other method calls on *Something* are forwarded to its real *value*:
+
+::
 
     >>> maybe('VALUE').lower()
     'value'
@@ -93,6 +100,8 @@ Examples & Use Cases
 Parsing deep JSON objects where some items might be missing.
 Without maybe:
 
+::
+
     stores = json.get('stores')
     if stores:
         products = stores[0].get('products')
@@ -100,13 +109,17 @@ Without maybe:
             product_name = products[0].get('details', {}).get('name') or 'unknown'
 
 With maybe:
+
+::
     
     product_name = maybe(stores)[0]['products'][0]['details']['name'].or_else('unknown')
 
 
 Getting the current logged in user's name.
 Without maybe:
-    
+
+::
+
     def get_user_name():
         current_user = request.user
         if current_user:
@@ -115,6 +128,8 @@ Without maybe:
         return ''
         
 With maybe:
+
+::
 
     def get_user_name():
         return maybe(request.user).name.or_else('')
