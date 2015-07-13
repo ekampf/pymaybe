@@ -26,12 +26,17 @@ class Nothing(Maybe):
 
         return els
 
+    def __call__(self, *args, **kwargs):
+        return Nothing()
+
     def __cmp__(self, other):
         if other.__class__ == Nothing:
             return 0
 
         return 1
 
+    def __getattr__(self, name):
+        return Nothing()
 
     # region Dict
     def __len__(self):
@@ -67,12 +72,18 @@ class Nothing(Maybe):
 class Something(Maybe):
     def __init__(self, value):
         self.__value = value
+        
+    def __call__(self, *args, **kwargs):
+        return maybe(self.__value(*args, **kwargs))
 
     def __cmp__(self, other):
         if other.__class__ == Nothing:
             return 1
 
-        return self.get().__cmp__(other.get())
+        if other.__class__ == Something:
+            return cmp(self.get(), other.get())
+        else:
+            return cmp(self.get(), other)
 
     def is_some(self):
         return True
@@ -393,6 +404,13 @@ def maybe(value):
         2
         >>> maybe(4) * 2
         8
+        
+      And methods:
+
+        >>> maybe('VALUE').lower()
+        'value'
+        >>> maybe(None).invalid().method().or_else('unknwon')
+        'unknwon'
 
       Enabled easily using NestedDictionaries without having to worry
       if a value is missing.
@@ -445,7 +463,7 @@ def get_doctest_globs():
             }
         }),
         'eran' : maybe(eran),
-        'maybe': maybe
+        'maybe': maybe,
     }
 
     return globals_dict
