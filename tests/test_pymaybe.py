@@ -26,7 +26,7 @@ class TestPyMaybe(unittest.TestCase):
     def test_something_forwardsMethodCalls(self):
         result = pymaybe.maybe('VALUE').lower()
         assert result.is_some()
-        assert result == 'value'
+        assert result == 'value', "result %s should be 'value'" % result
         assert result == pymaybe.maybe('value')
 
     def test_something_forwardsMethodCalls_handlesNonExisting(self):
