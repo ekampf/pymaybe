@@ -65,6 +65,9 @@ class Nothing(Maybe):
         if other.__class__ == Nothing:
             return True
 
+        if other is None:
+            return True
+
         return False
 
     #endregion
@@ -144,7 +147,7 @@ class Something(Maybe):
 
     def __gt__(self, other):
         if other.__class__ == Nothing:
-            return False
+            return True
 
         if other.__class__ == Something:
             return self.get() > other.get()
@@ -162,7 +165,7 @@ class Something(Maybe):
 
     def __ge__(self, other):
         if other.__class__ == Nothing:
-            return False
+            return True
 
         if other.__class__ == Something:
             return self.get() >= other.get()
