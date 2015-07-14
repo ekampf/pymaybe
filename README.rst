@@ -4,6 +4,9 @@ PyMaybe
 
 .. image:: https://travis-ci.org/ekampf/pymaybe.svg?branch=master
         :target: https://travis-ci.org/ekampf/pymaybe
+
+.. image:: https://coveralls.io/repos/ekampf/pymaybe/badge.svg?branch=master&service=github 
+        :target: https://coveralls.io/github/ekampf/pymaybe?branch=master
         
 .. image:: https://img.shields.io/pypi/v/pymaybe.svg
         :target: https://pypi.python.org/pypi/pymaybe
