@@ -132,5 +132,14 @@ class TestPyMaybe(unittest.TestCase):
 
     #endregion
 
+    # region Assertions (for compatibility between Python version)
+
+    def assertIsInstance(self, obj, cls, msg=None):
+        result = isinstance(obj, cls)
+        self.assertTrue(result, msg=msg)
+
+    #endregion
+
+
 if __name__ == '__main__':
     unittest.main()
