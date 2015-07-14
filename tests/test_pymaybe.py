@@ -8,10 +8,14 @@ test_pymaybe
 Tests for `pymaybe` module.
 """
 
+import sys
 import unittest
 import doctest
 
 from pymaybe import maybe, Something, Nothing
+
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
 
 def load_tests(loader, tests, ignore):
     import pymaybe
@@ -120,8 +124,13 @@ class TestPyMaybe(unittest.TestCase):
         n = 123
         f = 3.14
 
+        if PY2:
+            self.assertEqual(unicode(Something(s)), s)
+
+            self.assertEqual(long(Something(n)), n)
+            self.assertIsInstance(long(Something(f)), long)
+
         self.assertEqual(str(Something(s)), s)
-        self.assertEqual(unicode(Something(s)), s)
 
         self.assertEqual(repr(Something(s)), repr(s))
         self.assertEqual(repr(Something(d)),  repr(d))
@@ -129,8 +138,9 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(int(Something(n)), n)
         self.assertIsInstance(int(Something(n)), int)
 
-        self.assertEqual(long(Something(n)), n)
-        self.assertIsInstance(float(Something(n)), float)
+        self.assertEqual(float(Something(f)), f)
+        self.assertIsInstance(float(Something(f)), float)
+
 
 
 
