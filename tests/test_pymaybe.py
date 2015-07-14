@@ -34,7 +34,7 @@ class TestPyMaybe(unittest.TestCase):
         self.assertIsInstance(result, Nothing)
 
 
-    #region Nothing - Comparison]
+    #region Nothing - Comparison
 
     def test_nothing_equalToNothing(self):
         self.assertTrue(Nothing() == Nothing())
@@ -94,7 +94,7 @@ class TestPyMaybe(unittest.TestCase):
 
     #endregion
 
-    #region Something - Comparison]
+    #region Something - Comparison
 
     def test_something_notEqualToNothing(self):
         self.assertFalse(Something(1) == Nothing())
@@ -113,6 +113,27 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(Something("value") >= Nothing())
 
     #endregion
+
+    def test_something_conversions(self):
+        s = "value"
+        d = dict(name="Eran")
+        n = 123
+        f = 3.14
+
+        self.assertEqual(str(Something(s)), s)
+        self.assertEqual(unicode(Something(s)), s)
+
+        self.assertEqual(repr(Something(s)), repr(s))
+        self.assertEqual(repr(Something(d)),  repr(d))
+
+        self.assertEqual(int(Something(n)), n)
+        self.assertIsInstance(int(Something(n)), int)
+
+        self.assertEqual(long(Something(n)), n)
+        self.assertIsInstance(float(Something(n)), float)
+
+
+
 
     #region method call forwarding
 
