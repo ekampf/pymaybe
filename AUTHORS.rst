@@ -2,7 +2,7 @@
 Credits
 =======
 
-* Eran Kampf <eran@ekampf.com>
+* Eran Kampf - http://www.developerzen.com
 
 Contributors
 ------------
