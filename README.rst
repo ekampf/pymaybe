@@ -5,9 +5,9 @@ PyMaybe
 .. image:: https://travis-ci.org/ekampf/pymaybe.svg?branch=master
         :target: https://travis-ci.org/ekampf/pymaybe
 
-.. image:: https://coveralls.io/repos/ekampf/pymaybe/badge.svg?branch=master&service=github 
+.. image:: https://coveralls.io/repos/ekampf/pymaybe/badge.svg?branch=master&service=github
         :target: https://coveralls.io/github/ekampf/pymaybe?branch=master
-        
+
 .. image:: https://img.shields.io/pypi/v/pymaybe.svg
         :target: https://pypi.python.org/pypi/pymaybe
 
@@ -16,17 +16,21 @@ A Python implementation of the Maybe pattern.
 Installation
 ------------
 
+::
+
     pip install pymaybe
-    
+
 Getting Started
 ---------------
+
+::
 
     from pymaybe import maybe
     first_name = maybe(deep_hash)['account']['user_profile']['first_name'].or_else("<unknown>")
 
 Documentation
 -------------
-Maybe monad is a programming pattern that allows to treat None values that same way as non-none values. 
+Maybe monad is a programming pattern that allows to treat None values that same way as non-none values.
 This is done by wrapping the value, which may or may not be None to, a wrapper class.
 
 The implementation includes two classes: *Maybe* and *Something*.
@@ -37,32 +41,32 @@ There's also a method *maybe* which wraps a regular value and and returns *Somet
 
     >>> maybe("I'm a value")
     "I'm a value"
-    
+
     >>> maybe(None);
     None
-    
+
 Both *Something* and *Nothing* implement 4 methods allowing you to test their real value: *is_some*, *is_none*, *get* and *or_else*
 
 ::
 
     >>> maybe("I'm a value").is_some()
     True
-    
+
     >>> maybe("I'm a value").is_none()
     False
-    
+
     >>> maybe(None).is_some()
     False
-    
+
     >>> maybe(None).is_none()
     True
-    
+
     >>> maybe("I'm a value").get()
     "I'm a value"
-    
+
     >>> maybe("I'm a value").or_else(lambda: "No value")
     "I'm a value"
-    
+
     >>> maybe(None).get()
     Traceback (most recent call last):
     ...
@@ -93,10 +97,10 @@ All other method calls on *Something* are forwarded to its real *value*:
 
     >>> maybe('VALUE').lower()
     'value'
-    
+
     >>> maybe(None).invalid().method().or_else('unknwon')
     'unknwon'
-    
+
 Examples & Use Cases
 --------------------
 
@@ -114,7 +118,7 @@ Without maybe:
 With maybe:
 
 ::
-    
+
     product_name = maybe(stores)[0]['products'][0]['details']['name'].or_else('unknown')
 
 
@@ -127,9 +131,9 @@ Without maybe:
         current_user = request.user
         if current_user:
             return current_user.name
-        
+
         return ''
-        
+
 With maybe:
 
 ::
