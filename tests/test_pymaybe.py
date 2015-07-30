@@ -47,6 +47,13 @@ class TestPyMaybe(unittest.TestCase):
         self.assertFalse(Nothing() == Something(2))
         self.assertFalse(Something(1) == Nothing())
 
+    def test_nothing_neSomething(self):
+        self.assertTrue(Nothing() != Something(2))
+        self.assertTrue(Something(1) != Nothing())
+
+    def test_nothing_neNothing(self):
+        self.assertFalse(Nothing() != Nothing())
+
     def test_nothing_ltNothing_isFalse(self):
         self.assertFalse(Nothing() < Nothing())
 
@@ -80,6 +87,12 @@ class TestPyMaybe(unittest.TestCase):
     def test_nothing_geNotNoneOrNothing_isFalse(self):
         self.assertFalse(Nothing() >= Something(2))
         self.assertFalse(Nothing() >= "some")
+
+    def test_nothing_unicode(self):
+        self.assertEqual(unicode(Nothing()), u'None')
+
+    def test_nothing_nonzero_isFalse(self):
+        self.assertFalse(bool(Nothing()))
 
     #endregion
 
