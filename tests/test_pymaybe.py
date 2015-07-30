@@ -22,6 +22,8 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(pymaybe, globs=pymaybe.get_doctest_globs()))
     return tests
 
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
 
 class TestPyMaybe(unittest.TestCase):
 
@@ -89,7 +91,8 @@ class TestPyMaybe(unittest.TestCase):
         self.assertFalse(Nothing() >= "some")
 
     def test_nothing_unicode(self):
-        self.assertEqual(unicode(Nothing()), u'None')
+        if PY2:
+            self.assertEqual(unicode(Nothing()), u'None')
 
     def test_nothing_nonzero_isFalse(self):
         self.assertFalse(bool(Nothing()))
