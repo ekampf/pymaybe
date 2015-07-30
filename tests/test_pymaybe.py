@@ -112,6 +112,20 @@ class TestPyMaybe(unittest.TestCase):
     #endregion
 
     #region Something - Comparison
+    def test_something_cmp_greaterThanNothong(self):
+        l = [Something(0), Nothing()]
+        sortedl = sorted(l)
+        self.assertTrue(isinstance(sortedl[0], Nothing))
+        self.assertTrue(isinstance(sortedl[1], Something))
+
+    def test_something_cmp_handlesComparisonBetweenSomethings(self):
+        l = [Something(10), Something(3)]
+        sortedl = sorted(l)
+        self.assertTrue(isinstance(sortedl[0], Something))
+        self.assertTrue(isinstance(sortedl[1], Something))
+
+        self.assertEqual(sortedl[0], 3)
+        self.assertEqual(sortedl[1], 10)
 
     def test_something_notEqualToNothing(self):
         self.assertFalse(Something(1) == Nothing())
