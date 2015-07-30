@@ -137,6 +137,10 @@ class TestPyMaybe(unittest.TestCase):
     def test_something_ltNothing_isFalse(self):
         self.assertFalse(Something("value") < Nothing())
 
+    def test_something_ltSomething_usesValue(self):
+        self.assertFalse(Something(3) < Something(1))
+        self.assertTrue(Something(3) > Something(1))
+
     def test_something_gtNothing_isTrue(self):
         self.assertTrue(Something("value") > Nothing())
 
