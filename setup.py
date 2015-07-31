@@ -20,12 +20,12 @@ def get_build_number():
             build_number = f.read()
             build_number = re.sub("[^a-z0-9]+","", build_number, flags=re.IGNORECASE)
             return '.' + build_number
-
+            
     return ''
-
+    
 def get_version(package_name):
     build_number = get_build_number()
-
+    
     version_re = re.compile(r"^__version__ = [\"']([\w_.-]+)[\"']$")
     package_components = package_name.split('.')
     init_path = os.path.join(root_dir, *(package_components + ['__init__.py']))
@@ -65,7 +65,6 @@ setup(
     package_dir={'pymaybe': 'pymaybe'},
     include_package_data=True,
     install_requires=requirements,
-    setup_requires=['flake8'],
     license="BSD",
     zip_safe=False,
     keywords='pymaybe',
