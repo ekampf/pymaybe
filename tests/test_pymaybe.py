@@ -254,6 +254,19 @@ class TestPyMaybe(unittest.TestCase):
 
     #endregion
 
+    def test_something_iter_onIterable_returnsArrayIterator(self):
+        s = maybe([1,2,3,4,5])
+        l = list(iter(s))
+        self.assertEqual([1,2,3,4,5], l)
+
+    def test_something_iter_onNotIterable_returnsArrayIterator(self):
+        class Foo(object):
+            pass
+
+        obj = Foo()
+        l = list(iter(maybe(obj)))
+        self.assertEqual(l, [obj])
+
     #region method call forwarding
 
     def test_something_forwardsMethodCalls(self):

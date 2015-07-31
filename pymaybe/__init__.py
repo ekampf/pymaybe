@@ -188,9 +188,9 @@ class Something(Maybe):
 
     def __iter__(self):
         try:
-            iterator = iter(self.value)
+            iterator = iter(self.__value)
         except TypeError:
-            iterator = iter([self.value])
+            iterator = iter([self.__value])
 
         return iterator
 
