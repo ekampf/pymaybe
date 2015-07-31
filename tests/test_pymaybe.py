@@ -224,7 +224,8 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(float(Something(f)), f)
         self.assertIsInstance(float(Something(f)), float)
 
-    #region Something - Dict
+    #region Something - Container Methods
+
     def test_something_len_isZero(self):
         s = maybe(dict(test='value'))
         self.assertEqual(len(s), 1)
@@ -252,8 +253,6 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(len(s), 0)
         self.assertTrue(s['test'].is_none())
 
-    #endregion
-
     def test_something_iter_onIterable_returnsArrayIterator(self):
         s = maybe([1,2,3,4,5])
         l = list(iter(s))
@@ -266,6 +265,20 @@ class TestPyMaybe(unittest.TestCase):
         obj = Foo()
         l = list(iter(maybe(obj)))
         self.assertEqual(l, [obj])
+
+    def test_something_missing_onDefaultDict_forwardsCallToDefaultDict(self):
+        from collections import defaultdict
+        d = maybe(defaultdict(lambda: 'default'))
+        d['test'] = 'ok'
+
+        self.assertEqual(d['doesnt exist'], 'default')
+        self.assertEqual(d['test'], 'ok')
+
+        self.assertTrue(d['doesnt exist'].is_some())
+        self.assertTrue(d['test'].is_some())
+
+    #endregion
+
 
     def test_something_typeConversions(self):
         import math

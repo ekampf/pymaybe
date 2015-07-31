@@ -6,6 +6,7 @@ __version__ = '0.1.4'
 
 from sys import getsizeof
 
+
 class Maybe(object):
     pass
 
@@ -186,14 +187,6 @@ class Something(Maybe):
     def or_else(self, els=None):
         return self.__value
 
-    def __iter__(self):
-        try:
-            iterator = iter(self.__value)
-        except TypeError:
-            iterator = iter([self.__value])
-
-        return iterator
-
     def __getattr__(self, name):
         try:
             return maybe(getattr(self.__value, name))
@@ -206,18 +199,41 @@ class Something(Maybe):
 
         return setattr(self.__value, name, v)
 
-    #region Dict
+    #region Containers Methods
+
     def __len__(self):
         return len(self.__value)
 
     def __getitem__(self, key):
-        return maybe(self.__value.get(key, None))
+        try:
+            return maybe(self.__value[key])
+        except KeyError:
+            return Nothing()
 
     def __setitem__(self, key, value):
         self.__value[key] = value
 
     def __delitem__(self, key):
         del self.__value[key]
+
+    def __iter__(self):
+        try:
+            iterator = iter(self.__value)
+        except TypeError:
+            iterator = iter([self.__value])
+
+        return iterator
+
+    def __reversed__(self):
+        return maybe(reversed(self.__value))
+
+    def __missing__(self, key):
+        klass = self.__value.__class__
+        if hasattr(klass, '__missing__') and callable(getattr(klass, '__missing__')):
+            return maybe(self.__value.__missing__(key))
+
+        return Nothing()
+
 
     #endregion
 
@@ -432,6 +448,7 @@ class Something(Maybe):
 
     #endregion
 
+
 def maybe(value):
     """Wraps an object with a Maybe instance.
 
@@ -528,7 +545,7 @@ def maybe(value):
     if isinstance(value, Maybe):
         return value
 
-    if value:
+    if value is not None:
         return Something(value)
 
     return Nothing()
