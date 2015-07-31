@@ -99,6 +99,25 @@ class TestPyMaybe(unittest.TestCase):
 
     #endregion
 
+    #region Nothing - Dict
+    def test_nothing_len_isZero(self):
+        self.assertEqual(len(Nothing()), 0)
+
+    def test_nothing_getItem_returnsNothing(self):
+        n = Nothing()['name']
+        self.assertTrue(isinstance(n, Nothing))
+        self.assertTrue(n.is_none())
+        self.assertFalse(n.is_some())
+
+    def test_nothing_setItem_doestNothing(self):
+        Nothing()['name'] = 'value'  # Will raise if __setitem__ wasnt defined
+
+    def test_nothing_delItem_doestNothing(self):
+        del Nothing()['name']  # Will raise if __delitem__ wasnt defined
+
+    #endregion
+
+
     #region Nothing - Misc Methods
 
     def test_nothing_length_isZero(self):
