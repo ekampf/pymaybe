@@ -224,9 +224,35 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(float(Something(f)), f)
         self.assertIsInstance(float(Something(f)), float)
 
+    #region Something - Dict
+    def test_something_len_isZero(self):
+        s = maybe(dict(test='value'))
+        self.assertEqual(len(s), 1)
 
+        s = maybe([1,2,3])
+        self.assertEqual(len(s), 3)
 
+    def test_something_getItem_returnsNothing(self):
+        s = maybe(dict(test='value'))
+        self.assertTrue(isinstance(s['test'], Something))
+        self.assertTrue(s['test'].is_some())
 
+        self.assertTrue(isinstance(s['test1'], Nothing))
+        self.assertTrue(s['test1'].is_none())
+
+    def test_something_setItem_doestNothing(self):
+        s = maybe(dict(test='value'))
+        s['test'] = 'yeah'
+        self.assertEqual(s['test'], 'yeah')
+        self.assertTrue(s['test'].is_some())
+
+    def test_something_delItem_doestNothing(self):
+        s = maybe(dict(test='value'))
+        del s['test']  # Will raise if __delitem__ wasnt defined
+        self.assertEqual(len(s), 0)
+        self.assertTrue(s['test'].is_none())
+
+    #endregion
 
     #region method call forwarding
 
@@ -245,6 +271,8 @@ class TestPyMaybe(unittest.TestCase):
         assert result.is_none()
 
     #endregion
+
+
 
     # region Assertions (for compatibility between Python version)
 
