@@ -17,13 +17,16 @@ from pymaybe import maybe, Something, Nothing
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 
+
 def load_tests(loader, tests, ignore):
     import pymaybe
-    tests.addTests(doctest.DocTestSuite(pymaybe, globs=pymaybe.get_doctest_globs()))
+    tests.addTests(doctest.DocTestSuite(pymaybe,
+                                        globs=pymaybe.get_doctest_globs()))
     return tests
 
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
+
 
 class TestPyMaybe(unittest.TestCase):
 
@@ -39,8 +42,8 @@ class TestPyMaybe(unittest.TestCase):
         result = maybe(None)
         self.assertIsInstance(result, Nothing)
 
+    # region Nothing - Comparison
 
-    #region Nothing - Comparison
     def test_nothing_cmp(self):
         if PY2:
             self.assertEqual(0, cmp(Nothing(), Nothing()))
@@ -98,9 +101,10 @@ class TestPyMaybe(unittest.TestCase):
         self.assertFalse(Nothing() >= Something(2))
         self.assertFalse(Nothing() >= "some")
 
-    #endregion
+    # endregion
 
-    #region Nothing - Dict
+    # region Nothing - Dict
+
     def test_nothing_len_isZero(self):
         self.assertEqual(len(Nothing()), 0)
 
@@ -116,9 +120,10 @@ class TestPyMaybe(unittest.TestCase):
     def test_nothing_delItem_doestNothing(self):
         del Nothing()['name']  # Will raise if __delitem__ wasnt defined
 
-    #endregion
+    # endregion
 
-    #region Nothing - Custom representation
+    # region Nothing - Custom representation
+
     def test_nothing_repr(self):
         self.assertEqual(repr(Nothing()), repr(None))
 
@@ -131,10 +136,10 @@ class TestPyMaybe(unittest.TestCase):
 
     def test_nothing_nonzero_isFalse(self):
         self.assertFalse(bool(Nothing()))
-    #endregion
 
+    # endregion
 
-    #region Nothing - Misc Methods
+    # region Nothing - Misc Methods
 
     def test_nothing_length_isZero(self):
         self.assertEqual(len(Nothing()), 0)
@@ -147,9 +152,10 @@ class TestPyMaybe(unittest.TestCase):
         n = Nothing()
         self.assertEqual(str(n), str(None))
 
-    #endregion
+    # endregion
 
-    #region Something - Comparison
+    # region Something - Comparison
+
     def test_something_cmp(self):
         if PY2:
             n = Nothing()
@@ -199,7 +205,7 @@ class TestPyMaybe(unittest.TestCase):
     def test_something_geNothing_isTrue(self):
         self.assertTrue(Something("value") >= Nothing())
 
-    #endregion
+    # endregion
 
     def test_something_conversions(self):
         s = "value"
@@ -216,7 +222,7 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(str(Something(s)), s)
 
         self.assertEqual(repr(Something(s)), repr(s))
-        self.assertEqual(repr(Something(d)),  repr(d))
+        self.assertEqual(repr(Something(d)), repr(d))
 
         self.assertEqual(int(Something(n)), n)
         self.assertIsInstance(int(Something(n)), int)
@@ -224,13 +230,13 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(float(Something(f)), f)
         self.assertIsInstance(float(Something(f)), float)
 
-    #region Something - Container Methods
+    # region Something - Container Methods
 
     def test_something_len_isZero(self):
         s = maybe(dict(test='value'))
         self.assertEqual(len(s), 1)
 
-        s = maybe([1,2,3])
+        s = maybe([1, 2, 3])
         self.assertEqual(len(s), 3)
 
     def test_something_getItem_returnsNothing(self):
@@ -254,9 +260,9 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(s['test'].is_none())
 
     def test_something_iter_onIterable_returnsArrayIterator(self):
-        s = maybe([1,2,3,4,5])
+        s = maybe([1, 2, 3, 4, 5])
         l = list(iter(s))
-        self.assertEqual([1,2,3,4,5], l)
+        self.assertEqual([1, 2, 3, 4, 5], l)
 
     def test_something_iter_onNotIterable_returnsArrayIterator(self):
         class Foo(object):
@@ -277,8 +283,7 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(d['doesnt exist'].is_some())
         self.assertTrue(d['test'].is_some())
 
-    #endregion
-
+    # endregion
 
     def test_something_typeConversions(self):
         import math
@@ -288,7 +293,7 @@ class TestPyMaybe(unittest.TestCase):
         self.assertEqual(hex(16), hex(Something(16)))
         self.assertEqual(math.trunc(math.pi), math.trunc(maybe(math.pi)))
 
-    #region method call forwarding
+    # region method call forwarding
 
     def test_something_forwardsMethodCalls(self):
         result = maybe('VALUE').lower()
@@ -304,9 +309,7 @@ class TestPyMaybe(unittest.TestCase):
         result = maybe(None).invalid().call()
         assert result.is_none()
 
-    #endregion
-
-
+    # endregion
 
     # region Assertions (for compatibility between Python version)
 
@@ -314,7 +317,7 @@ class TestPyMaybe(unittest.TestCase):
         result = isinstance(obj, cls)
         self.assertTrue(result, msg=msg)
 
-    #endregion
+    # endregion
 
 
 if __name__ == '__main__':

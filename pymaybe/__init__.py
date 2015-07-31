@@ -30,7 +30,7 @@ class Nothing(Maybe):
     def __call__(self, *args, **kwargs):
         return Nothing()
 
-    #region Comparison
+    # region Comparison
 
     def __cmp__(self, other):
         if other.__class__ == Nothing:
@@ -71,7 +71,7 @@ class Nothing(Maybe):
 
         return False
 
-    #endregion
+    # endregion
 
     def __getattr__(self, name):
         return Nothing()
@@ -114,7 +114,7 @@ class Something(Maybe):
     def __call__(self, *args, **kwargs):
         return maybe(self.__value(*args, **kwargs))
 
-    #region Comparison
+    # region Comparison
     def __cmp__(self, other):
         if other.__class__ == Nothing:
             return 1
@@ -145,7 +145,6 @@ class Something(Maybe):
 
         return self.get() < other
 
-
     def __gt__(self, other):
         if other.__class__ == Nothing:
             return True
@@ -172,7 +171,7 @@ class Something(Maybe):
             return self.get() >= other.get()
 
         return self.get() >= other
-    #endregion
+    # endregion
 
     def is_some(self):
         return True
@@ -183,7 +182,7 @@ class Something(Maybe):
     def get(self):
         return self.__value
 
-    #pylint: disable=W0613
+    # pylint: disable=W0613
     def or_else(self, els=None):
         return self.__value
 
@@ -199,7 +198,7 @@ class Something(Maybe):
 
         return setattr(self.__value, name, v)
 
-    #region Containers Methods
+    # region Containers Methods
 
     def __len__(self):
         return len(self.__value)
@@ -229,13 +228,13 @@ class Something(Maybe):
 
     def __missing__(self, key):
         klass = self.__value.__class__
-        if hasattr(klass, '__missing__') and callable(getattr(klass, '__missing__')):
+        if hasattr(klass, '__missing__') and \
+                callable(getattr(klass, '__missing__')):
             return maybe(self.__value.__missing__(key))
 
         return Nothing()
 
-
-    #endregion
+    # endregion
 
     # region Custom representation
 
@@ -283,14 +282,16 @@ class Something(Maybe):
 
     def __sizeof__(self):
         return getsizeof(self.__value)
-    #endregion
 
-    #region Arithmetics
+    # endregion
+
+    # region Arithmetics
+
     def __add__(self, other):
-        return maybe(self.__value+other)
+        return maybe(self.__value + other)
 
     def __sub__(self, other):
-        return maybe(self.__value-other)
+        return maybe(self.__value - other)
 
     def __mul__(self, other):
         return maybe(self.__value * other)
@@ -383,9 +384,11 @@ class Something(Maybe):
     def __rxor__(self, other):
         """Implements reflected bitwise xor using the ^ operator."""
         return maybe(other ^ self.__value)
-    #endregion
 
-    #region Augmented assignment
+    # endregion
+
+    # region Augmented assignment
+
     def __iadd__(self, other):
         """Implements addition with assignment."""
         self.__value += other
@@ -446,7 +449,7 @@ class Something(Maybe):
         self.__value ^= other
         return self
 
-    #endregion
+    # endregion
 
 
 def maybe(value):
@@ -567,7 +570,7 @@ def get_doctest_globs():
                 }
             }
         }),
-        'eran' : maybe(eran),
+        'eran': maybe(eran),
         'maybe': maybe,
     }
 
