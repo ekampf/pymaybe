@@ -35,7 +35,7 @@ class Nothing(Maybe):
         if other.__class__ == Nothing:
             return 0
 
-        return 1
+        return -1
 
     def __eq__(self, other):
         if other.__class__ == Nothing:
@@ -109,7 +109,7 @@ class Nothing(Maybe):
 class Something(Maybe):
     def __init__(self, value):
         self.__value = value
-        
+
     def __call__(self, *args, **kwargs):
         return maybe(self.__value(*args, **kwargs))
 
@@ -492,7 +492,7 @@ def maybe(value):
         2
         >>> maybe(4) * 2
         8
-        
+
       And methods:
 
         >>> maybe('VALUE').lower()

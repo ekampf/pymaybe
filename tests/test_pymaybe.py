@@ -41,6 +41,14 @@ class TestPyMaybe(unittest.TestCase):
 
 
     #region Nothing - Comparison
+    def test_nothing_cmp(self):
+        if PY2:
+            self.assertEqual(0, cmp(Nothing(), Nothing()))
+            self.assertEqual(1, cmp(1, Nothing()))
+            self.assertEqual(1, cmp(Something(5), Nothing()))
+            self.assertEqual(1, cmp(5, Nothing()))
+            self.assertEqual(-1, cmp(Nothing(), Something(5)))
+            self.assertEqual(-1, cmp(Nothing(), 5))
 
     def test_nothing_equalToNothing(self):
         self.assertTrue(Nothing() == Nothing())
@@ -90,13 +98,6 @@ class TestPyMaybe(unittest.TestCase):
         self.assertFalse(Nothing() >= Something(2))
         self.assertFalse(Nothing() >= "some")
 
-    def test_nothing_unicode(self):
-        if PY2:
-            self.assertEqual(unicode(Nothing()), u'None')
-
-    def test_nothing_nonzero_isFalse(self):
-        self.assertFalse(bool(Nothing()))
-
     #endregion
 
     #region Nothing - Dict
@@ -117,6 +118,21 @@ class TestPyMaybe(unittest.TestCase):
 
     #endregion
 
+    #region Nothing - Custom representation
+    def test_nothing_repr(self):
+        self.assertEqual(repr(Nothing()), repr(None))
+
+    def test_nothing_str(self):
+        self.assertEqual(str(Nothing()), str(None))
+
+    def test_nothing_unicode(self):
+        if PY2:
+            self.assertEqual(unicode(Nothing()), unicode(None))
+
+    def test_nothing_nonzero_isFalse(self):
+        self.assertFalse(bool(Nothing()))
+    #endregion
+
 
     #region Nothing - Misc Methods
 
@@ -134,6 +150,20 @@ class TestPyMaybe(unittest.TestCase):
     #endregion
 
     #region Something - Comparison
+    def test_something_cmp(self):
+        if PY2:
+            n = Nothing()
+            s = maybe(5)
+            s1 = maybe(7)
+
+            self.assertEqual(1, cmp(s, n))
+            self.assertEqual(cmp(5, 5), cmp(s, s))
+            self.assertEqual(cmp(5, 7), cmp(s, s1))
+            self.assertEqual(cmp(7, 5), cmp(s1, s))
+            self.assertEqual(cmp(5, 5), cmp(s, 5))
+            self.assertEqual(cmp(5, 7), cmp(s, 7))
+            self.assertEqual(cmp(7, 5), cmp(7, s))
+
     def test_something_cmp_greaterThanNothong(self):
         l = [Something(0), Nothing()]
         sortedl = sorted(l)
