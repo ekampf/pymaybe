@@ -267,6 +267,14 @@ class TestPyMaybe(unittest.TestCase):
         l = list(iter(maybe(obj)))
         self.assertEqual(l, [obj])
 
+    def test_something_typeConversions(self):
+        import math
+
+        self.assertEqual(complex(1), complex(Something(1)))
+        self.assertEqual(oct(1), oct(Something(1)))
+        self.assertEqual(hex(16), hex(Something(16)))
+        self.assertEqual(math.trunc(math.pi), math.trunc(maybe(math.pi)))
+
     #region method call forwarding
 
     def test_something_forwardsMethodCalls(self):
