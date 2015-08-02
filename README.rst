@@ -152,7 +152,8 @@ Further Reading
 
 Copyright and License
 ---------------------
-Copyright 2015 - Eran Kampf
+Copyright 2015 - `Eran Kampf <http://www.developerzen.com>`_
 
 * Free software: BSD license
 * Documentation: https://pymaybe.readthedocs.org.
+* Code is hosted on `GitHub <http://www.github.com/ekampf/pymaybe>`_
