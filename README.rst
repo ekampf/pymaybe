@@ -104,33 +104,30 @@ All other method calls on *Something* are forwarded to its real *value*:
 Examples & Use Cases
 --------------------
 
-Parsing deep JSON objects where some items might be missing.
-Without maybe:
+The Maybe pattern helps you avoid nasty try..except blocks.
+Consider the following code:
+
+::
+    try:
+        url = rss.load_feeds()[0].url.domain
+    except (TypeError, IndexError, KeyError, AttributeError):
+        url = "planetpython.org"
+
+With Maybe you could simply do:
 
 ::
 
-    stores = json.get('stores')
-    if stores:
-        products = stores[0].get('products')
-        if products:
-            product_name = products[0].get('details', {}).get('name') or 'unknown'
-
-With maybe:
-
-::
-
-    product_name = maybe(stores)[0]['products'][0]['details']['name'].or_else('unknown')
-
+    url = maybe(rss).load_feeds()[0]['url'].domain.or_else("planetpython.org")
 
 Getting the current logged in user's name.
 Without maybe:
 
 ::
 
-    def get_user_name():
-        current_user = request.user
-        if current_user:
-            return current_user.name
+    def get_user_zipcode():
+        address = getattr(request.user, 'address', None)
+        if address:
+            return getattr(address, 'zipcode', '')
 
         return ''
 
@@ -138,8 +135,8 @@ With maybe:
 
 ::
 
-    def get_user_name():
-        return maybe(request.user).name.or_else('')
+    def get_user_zipcode():
+        return maybe(request.user).address.zipcode.or_else('')
 
 Further Reading
 ---------------
