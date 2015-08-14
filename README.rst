@@ -81,7 +81,7 @@ Both *Something* and *Nothing* implement 4 methods allowing you to test their re
 In addition, *Something* and *Nothing* implement the Python magic methods allowing you to treat them as dictionaries:
 
 ::
-
+    >>> nested_dict = maybe(nested_dict)
     >>> nested_dict['store']['name']
     'MyStore'
 
