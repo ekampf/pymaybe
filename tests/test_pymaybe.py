@@ -248,13 +248,16 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(s['test1'].is_none())
 
     def test_something_list_getItem_returnsNothing(self):
-        s = maybe([1,2,3])
+        s = maybe([1, 2, 3])
         self.assertTrue(isinstance(s[0], Something))
         self.assertTrue(s[0].is_some())
         self.assertEqual(s[0].get(), 1)
 
         self.assertTrue(isinstance(s['test1'], Nothing))
         self.assertTrue(s['test1'].is_none())
+
+        self.assertTrue(isinstance(s[dict()], Nothing))
+        self.assertTrue(s[dict()].is_none())
 
         self.assertTrue(isinstance(s[10], Nothing))
         self.assertTrue(s[10].is_none())
