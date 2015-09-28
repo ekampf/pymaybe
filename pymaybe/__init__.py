@@ -206,7 +206,7 @@ class Something(Maybe):
     def __getitem__(self, key):
         try:
             return maybe(self.__value[key])
-        except KeyError:
+        except (KeyError, TypeError, IndexError):
             return Nothing()
 
     def __setitem__(self, key, value):
