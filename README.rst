@@ -16,14 +16,14 @@ A Python implementation of the Maybe pattern.
 Installation
 ------------
 
-::
+.. code::
 
     pip install pymaybe
 
 Getting Started
 ---------------
 
-::
+.. code::
 
     from pymaybe import maybe
     first_name = maybe(deep_hash)['account']['user_profile']['first_name'].or_else("<unknown>")
@@ -37,7 +37,7 @@ The implementation includes two classes: *Maybe* and *Something*.
 *Something* represents a value while *Nothing* represents a None value.
 There's also a method *maybe* which wraps a regular value and and returns *Something* or *Nothing* instance.
 
-::
+.. code::
 
     >>> maybe("I'm a value")
     "I'm a value"
@@ -47,7 +47,7 @@ There's also a method *maybe* which wraps a regular value and and returns *Somet
 
 Both *Something* and *Nothing* implement 4 methods allowing you to test their real value: *is_some*, *is_none*, *get* and *or_else*
 
-::
+.. code::
 
     >>> maybe("I'm a value").is_some()
     True
@@ -80,7 +80,8 @@ Both *Something* and *Nothing* implement 4 methods allowing you to test their re
 
 In addition, *Something* and *Nothing* implement the Python magic methods allowing you to treat them as dictionaries:
 
-::
+.. code::
+
     >>> nested_dict = maybe(nested_dict)
     >>> nested_dict['store']['name']
     'MyStore'
@@ -93,7 +94,7 @@ In addition, *Something* and *Nothing* implement the Python magic methods allowi
 
 All other method calls on *Something* are forwarded to its real *value*:
 
-::
+.. code::
 
     >>> maybe('VALUE').lower()
     'value'
@@ -107,7 +108,8 @@ Examples & Use Cases
 The Maybe pattern helps you avoid nasty try..except blocks.
 Consider the following code:
 
-::
+.. code::
+
     try:
         url = rss.load_feeds()[0].url.domain
     except (TypeError, IndexError, KeyError, AttributeError):
@@ -115,14 +117,14 @@ Consider the following code:
 
 With Maybe you could simply do:
 
-::
+.. code::
 
     url = maybe(rss).load_feeds()[0]['url'].domain.or_else("planetpython.org")
 
 Getting the current logged in user's name.
 Without maybe:
 
-::
+.. code::
 
     def get_user_zipcode():
         address = getattr(request.user, 'address', None)
@@ -133,7 +135,7 @@ Without maybe:
 
 With maybe:
 
-::
+.. code::
 
     def get_user_zipcode():
         return maybe(request.user).address.zipcode.or_else('')
