@@ -42,6 +42,9 @@ class Nothing(Maybe):
         if other.__class__ == Nothing:
             return True
 
+        if other is None:
+            return True
+
         return False
 
     def __ne__(self, other):

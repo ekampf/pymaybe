@@ -170,7 +170,7 @@ class TestPyMaybe(unittest.TestCase):
             self.assertEqual(cmp(5, 7), cmp(s, 7))
             self.assertEqual(cmp(7, 5), cmp(7, s))
 
-    def test_something_cmp_greaterThanNothong(self):
+    def test_something_cmp_greaterThanNothing(self):
         l = [Something(0), Nothing()]
         sortedl = sorted(l)
         self.assertTrue(isinstance(sortedl[0], Nothing))
@@ -184,6 +184,17 @@ class TestPyMaybe(unittest.TestCase):
 
         self.assertEqual(sortedl[0], 3)
         self.assertEqual(sortedl[1], 10)
+
+    def test_something_cmp(self):
+        l = [Something(1), 2, Nothing()]
+        sortedl = sorted(l)
+        self.assertTrue(isinstance(sortedl[0], Nothing))
+        self.assertTrue(isinstance(sortedl[1], Something))
+        self.assertTrue(isinstance(sortedl[2], int))
+
+        self.assertEqual(sortedl[0], None)
+        self.assertEqual(sortedl[1], 1)
+        self.assertEqual(sortedl[2], 2)
 
     def test_something_notEqualToNothing(self):
         self.assertFalse(Something(1) == Nothing())
