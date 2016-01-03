@@ -213,6 +213,14 @@ class TestPyMaybe(unittest.TestCase):
     def test_something_geNothing_isTrue(self):
         self.assertTrue(Something("value") >= Nothing())
 
+    def test_something_geSomething_comparesTheUnderlyingValue(self):
+        self.assertTrue(Something(11) > Something(2))
+        self.assertFalse(Something(1) > Something(2))
+
+    def test_something_geValue_comparesTheUnderlyingValue(self):
+        self.assertTrue(Something(11) > 2)
+        self.assertFalse(Something(1) > 2)
+
     # endregion
 
     def test_something_conversions(self):
