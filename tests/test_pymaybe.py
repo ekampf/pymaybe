@@ -44,6 +44,16 @@ class TestPyMaybe(unittest.TestCase):
 
     # region Nothing - Comparison
 
+    def test_comparisons(self):
+        self.assertReallyEqual(Something(1), 1)
+        self.assertReallyEqual(1, Something(1))
+        self.assertReallyEqual(Something(1), Something(1))
+        self.assertReallyEqual(Nothing(), Nothing())
+
+        self.assertReallyNotEqual(Something(1), Something(2))
+        self.assertReallyNotEqual(Something(1), Nothing())
+        self.assertReallyNotEqual(Nothing(), Something(1))
+
     def test_nothing_cmp(self):
         if PY2:
             self.assertEqual(0, cmp(Nothing(), Nothing()))
@@ -325,6 +335,11 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(d['doesnt exist'].is_some())
         self.assertTrue(d['test'].is_some())
 
+    def test_something_reversed(self):
+        l = maybe([1, 2, 3])
+        lr = list(reversed(l))
+        self.assertListEqual(lr, [3, 2, 1])
+
     # endregion
 
     def test_something_typeConversions(self):
@@ -360,6 +375,28 @@ class TestPyMaybe(unittest.TestCase):
         self.assertTrue(result, msg=msg)
 
     # endregion
+
+    def assertReallyEqual(self, a, b):
+        self.assertEqual(a, b)
+        self.assertEqual(b, a)
+        self.assertTrue(a == b)
+        self.assertTrue(b == a)
+        self.assertFalse(a != b)
+        self.assertFalse(b != a)
+        if PY2:
+            self.assertEqual(0, cmp(a, b))
+            self.assertEqual(0, cmp(b, a))
+
+    def assertReallyNotEqual(self, a, b):
+        self.assertNotEqual(a, b)
+        self.assertNotEqual(b, a)
+        self.assertFalse(a == b)
+        self.assertFalse(b == a)
+        self.assertTrue(a != b)
+        self.assertTrue(b != a)
+        if PY2:
+            self.assertNotEqual(0, cmp(a, b))
+            self.assertNotEqual(0, cmp(b, a))
 
 
 if __name__ == '__main__':
