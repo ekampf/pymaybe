@@ -338,7 +338,10 @@ class TestPyMaybe(unittest.TestCase):
     def test_something_reversed(self):
         l = maybe([1, 2, 3])
         lr = list(reversed(l))
-        self.assertListEqual(lr, [3, 2, 1])
+
+        self.assertEqual(lr[0], 3)
+        self.assertEqual(lr[1], 2)
+        self.assertEqual(lr[2], 1)
 
     # endregion
 
