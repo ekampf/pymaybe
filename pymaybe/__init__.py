@@ -96,10 +96,10 @@ class Nothing(Maybe):
 
     # region Custom representation
     def __repr__(self):
-        return repr(None)
+        return 'Nothing'
 
     def __str__(self):
-        return str(None)
+        return 'Nothing'
 
     def __unicode__(self):
         return unicode(None)
@@ -242,10 +242,10 @@ class Something(Maybe):
     # region Custom representation
 
     def __repr__(self):
-        return repr(self.__value)
+        return 'Something(%s)' % repr(self.__value)
 
     def __str__(self):
-        return str(self.__value)
+        return 'Something(%s)' % str(self.__value)
 
     def __int__(self):
         return int(self.__value)
