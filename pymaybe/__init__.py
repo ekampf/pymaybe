@@ -27,6 +27,12 @@ class Nothing(Maybe):
 
         return els
 
+    def or_none(self):
+        return self.or_else()
+
+    def or_empty_list(self):
+        return self.or_else([])
+
     def __call__(self, *args, **kwargs):
         return Nothing()
 
@@ -188,6 +194,12 @@ class Something(Maybe):
     # pylint: disable=W0613
     def or_else(self, els=None):
         return self.__value
+
+    def or_none(self):
+        return self.or_else()
+
+    def or_empty_list(self):
+        return self.or_else([])
 
     def __getattr__(self, name):
         try:
