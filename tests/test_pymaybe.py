@@ -20,8 +20,13 @@ PY3 = sys.version_info[0] == 3
 
 def load_tests(loader, tests, ignore):
     import pymaybe
-    tests.addTests(doctest.DocTestSuite(pymaybe,
-                                        globs=pymaybe.get_doctest_globs()))
+    tests.addTests(
+        doctest.DocTestSuite(
+            pymaybe,
+            globs=pymaybe.get_doctest_globs(),
+            optionflags=doctest.IGNORE_EXCEPTION_DETAIL
+        )
+    )
     return tests
 
 PY2 = sys.version_info[0] == 2
