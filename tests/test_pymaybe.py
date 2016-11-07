@@ -134,9 +134,6 @@ class TestPyMaybe(unittest.TestCase):
 
     # region Nothing - Custom representation
 
-    def test_nothing_repr(self):
-        self.assertEqual(repr(Nothing()), repr(None))
-
     def test_nothing_unicode(self):
         if PY2:
             self.assertEqual(unicode(Nothing()), unicode(None))
