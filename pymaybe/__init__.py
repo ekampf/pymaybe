@@ -2,7 +2,7 @@
 
 __author__ = 'Eran Kampf'
 __email__ = 'eran@ekampf.com'
-__version__ = '0.1.7'
+__version__ = '0.2.0'
 
 from sys import getsizeof
 
@@ -26,6 +26,12 @@ class Nothing(Maybe):
             return els()
 
         return els
+
+    def or_none(self):
+        return self.or_else()
+
+    def or_empty_list(self):
+        return self.or_else([])
 
     def __call__(self, *args, **kwargs):
         return Nothing()
@@ -188,6 +194,12 @@ class Something(Maybe):
     # pylint: disable=W0613
     def or_else(self, els=None):
         return self.__value
+
+    def or_none(self):
+        return self.or_else()
+
+    def or_empty_list(self):
+        return self.or_else([])
 
     def __getattr__(self, name):
         try:
@@ -459,10 +471,10 @@ def maybe(value):
     """Wraps an object with a Maybe instance.
 
       >>> maybe("I'm a value")
-      "I'm a value"
+      Something("I'm a value")
 
       >>> maybe(None);
-      None
+      Nothing
 
       Testing for value:
 
@@ -503,22 +515,22 @@ def maybe(value):
         eran = maybe(Person('eran'))
 
         >>> eran.name
-        'eran'
+        Something('eran')
         >>> eran.phone_number
-        None
+        Nothing
         >>> eran.phone_number.or_else('no phone number')
         'no phone number'
 
         >>> maybe(4) + 8
-        12
+        Something(12)
         >>> maybe(4) - 2
-        2
+        Something(2)
         >>> maybe(4) * 2
-        8
+        Something(8)
 
       And methods:
 
-        >>> maybe('VALUE').lower()
+        >>> maybe('VALUE').lower().get()
         'value'
         >>> maybe(None).invalid().method().or_else('unknwon')
         'unknwon'
@@ -536,10 +548,10 @@ def maybe(value):
             }
         })
 
-        >>> nested_dict['store']['name']
+        >>> nested_dict['store']['name'].get()
         'MyStore'
         >>> nested_dict['store']['address']
-        None
+        Nothing
         >>> nested_dict['store']['address']['street'].or_else('No Address Specified')
         'No Address Specified'
         >>> nested_dict['store']['departments']['sales']['head_count'].or_else('0')
