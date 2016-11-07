@@ -556,6 +556,10 @@ def maybe(value):
         Nothing
         >>> nested_dict['store']['address']['street'].or_else('No Address Specified')
         'No Address Specified'
+        >>> nested_dict['store']['address']['street'].or_none() is None
+        True
+        >>> nested_dict['store']['address']['street'].or_empty_list()
+        []
         >>> nested_dict['store']['departments']['sales']['head_count'].or_else('0')
         '10'
         >>> nested_dict['store']['departments']['marketing']['head_count'].or_else('0')
