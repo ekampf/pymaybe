@@ -222,6 +222,8 @@ class TestPyMaybe(unittest.TestCase):
 
     def test_something_leValue_comparesTheUnderlyingValue(self):
         self.assertTrue(Something(1) < 2)
+        self.assertTrue(Something(1) <= 2)
+        self.assertTrue(Something(1) <= 1)
         self.assertFalse(Something(11) < 2)
 
     def test_something_geNothing_isTrue(self):
@@ -229,6 +231,8 @@ class TestPyMaybe(unittest.TestCase):
 
     def test_something_geSomething_comparesTheUnderlyingValue(self):
         self.assertTrue(Something(11) > Something(2))
+        self.assertTrue(Something(11) >= Something(2))
+        self.assertTrue(Something(11) >= Something(11))
         self.assertFalse(Something(1) > Something(2))
 
     def test_something_geValue_comparesTheUnderlyingValue(self):
