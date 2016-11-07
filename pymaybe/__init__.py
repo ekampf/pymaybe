@@ -6,6 +6,8 @@ __version__ = '0.2.0'
 
 from sys import getsizeof
 
+class NothingValueError(ValueError):
+    pass
 
 class Maybe(object):
     pass
@@ -19,7 +21,7 @@ class Nothing(Maybe):
         return True
 
     def get(self):
-        raise Exception('No such element')
+        raise NothingValueError('No such element')
 
     def or_else(self, els=None):
         if callable(els):
@@ -498,7 +500,7 @@ def maybe(value):
         >>> maybe(None).get()
         Traceback (most recent call last):
         ...
-        Exception: No such element
+        NothingValueError: No such element
 
         >>> maybe(None).or_else(lambda: "value")
         'value'
