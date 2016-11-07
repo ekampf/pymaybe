@@ -2,7 +2,7 @@
 
 __author__ = 'Eran Kampf'
 __email__ = 'eran@ekampf.com'
-__version__ = '0.1.7'
+__version__ = '0.2.0'
 
 from sys import getsizeof
 
