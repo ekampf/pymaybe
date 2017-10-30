@@ -20,8 +20,13 @@ PY3 = sys.version_info[0] == 3
 
 def load_tests(loader, tests, ignore):
     import pymaybe
-    tests.addTests(doctest.DocTestSuite(pymaybe,
-                                        globs=pymaybe.get_doctest_globs()))
+    tests.addTests(
+        doctest.DocTestSuite(
+            pymaybe,
+            globs=pymaybe.get_doctest_globs(),
+            optionflags=doctest.IGNORE_EXCEPTION_DETAIL
+        )
+    )
     return tests
 
 PY2 = sys.version_info[0] == 2
@@ -134,12 +139,6 @@ class TestPyMaybe(unittest.TestCase):
 
     # region Nothing - Custom representation
 
-    def test_nothing_repr(self):
-        self.assertEqual(repr(Nothing()), repr(None))
-
-    def test_nothing_str(self):
-        self.assertEqual(str(Nothing()), str(None))
-
     def test_nothing_unicode(self):
         if PY2:
             self.assertEqual(unicode(Nothing()), unicode(None))
@@ -159,8 +158,7 @@ class TestPyMaybe(unittest.TestCase):
         self.assertIsInstance(result, Nothing)
 
     def test_nothing_strings_returnNone(self):
-        n = Nothing()
-        self.assertEqual(str(n), str(None))
+        self.assertEqual(str(Nothing()), "Nothing")
 
     # endregion
 
@@ -229,6 +227,8 @@ class TestPyMaybe(unittest.TestCase):
 
     def test_something_leValue_comparesTheUnderlyingValue(self):
         self.assertTrue(Something(1) < 2)
+        self.assertTrue(Something(1) <= 2)
+        self.assertTrue(Something(1) <= 1)
         self.assertFalse(Something(11) < 2)
 
     def test_something_geNothing_isTrue(self):
@@ -236,6 +236,8 @@ class TestPyMaybe(unittest.TestCase):
 
     def test_something_geSomething_comparesTheUnderlyingValue(self):
         self.assertTrue(Something(11) > Something(2))
+        self.assertTrue(Something(11) >= Something(2))
+        self.assertTrue(Something(11) >= Something(11))
         self.assertFalse(Something(1) > Something(2))
 
     def test_something_geValue_comparesTheUnderlyingValue(self):
@@ -256,10 +258,10 @@ class TestPyMaybe(unittest.TestCase):
             self.assertEqual(long(Something(n)), n)
             self.assertIsInstance(long(Something(f)), long)
 
-        self.assertEqual(str(Something(s)), s)
+        self.assertEqual(str(Something(s)), "Something(%s)" % s)
 
-        self.assertEqual(repr(Something(s)), repr(s))
-        self.assertEqual(repr(Something(d)), repr(d))
+        self.assertEqual(repr(Something(s)), "Something(%s)" % repr(s))
+        self.assertEqual(repr(Something(d)), "Something(%s)" % repr(d))
 
         self.assertEqual(int(Something(n)), n)
         self.assertIsInstance(int(Something(n)), int)
