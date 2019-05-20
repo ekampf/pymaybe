@@ -5,15 +5,18 @@ __email__ = 'eran@ekampf.com'
 __version__ = '0.2.0'
 
 from sys import getsizeof
+from typing import Generic, TypeVar
+
+A = TypeVar("A")
 
 class NothingValueError(ValueError):
     pass
 
-class Maybe(object):
+class Maybe(Generic[A]):
     pass
 
 
-class Nothing(Maybe):
+class Nothing(Maybe[A]):
     def is_some(self):
         return False
 
@@ -118,7 +121,7 @@ class Nothing(Maybe):
     # endregion
 
 
-class Something(Maybe):
+class Something(Maybe[A]):
     def __init__(self, value):
         self.__value = value
 
