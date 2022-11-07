@@ -123,7 +123,10 @@ class Something(Maybe):
         self.__value = value
 
     def __call__(self, *args, **kwargs):
-        return maybe(self.__value(*args, **kwargs))
+        try:
+            return maybe(self.__value(*args, **kwargs))
+        except Exception:
+            return Nothing()
 
     # region Comparison
     def __cmp__(self, other):

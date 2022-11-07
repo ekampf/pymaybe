@@ -367,6 +367,13 @@ class TestPyMaybe(unittest.TestCase):
         result = maybe('VALUE').lowerr()
         assert result.is_none()
 
+    def test_something_forwardsMethodCalls_handlesException(self):
+        class Thrower():
+            def throw(self):
+                raise Exception()
+        result = maybe(Thrower()).throw()
+        assert result.is_none()
+
     def test_nothing_forwardsMethodCalls_handlesNonExisting(self):
         result = maybe(None).invalid().call()
         assert result.is_none()
