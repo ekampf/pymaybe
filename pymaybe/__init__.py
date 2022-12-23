@@ -566,9 +566,6 @@ def maybe(value):
         '0'
 
     """
-    if isinstance(value, Maybe):
-        return value
-
     if value is not None:
         return Something(value)
 
